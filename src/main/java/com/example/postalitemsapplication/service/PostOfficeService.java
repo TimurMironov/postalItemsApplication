@@ -1,5 +1,6 @@
 package com.example.postalitemsapplication.service;
 
+import com.example.postalitemsapplication.exception.NotFoundException;
 import com.example.postalitemsapplication.model.PostOffice;
 import com.example.postalitemsapplication.repository.PostOfficeRepository;
 import org.springframework.stereotype.Service;
@@ -17,12 +18,12 @@ public class PostOfficeService implements CommonServiceMethods<PostOffice> {
 
     @Override
     public List<PostOffice> list() {
-        return null;
+        return postOfficeRepository.findAll();
     }
 
     @Override
     public PostOffice getByID(Integer id) {
-        return postOfficeRepository.findById(id).orElse(null);
+        return postOfficeRepository.findById(id).orElseThrow(()-> new NotFoundException("Офис с id " + id + " не найден"));
     }
 
 
@@ -33,6 +34,7 @@ public class PostOfficeService implements CommonServiceMethods<PostOffice> {
 
     @Override
     public void delete(Integer id) {
+        postOfficeRepository.deleteById(id);
 
     }
 }

@@ -1,5 +1,6 @@
 package com.example.postalitemsapplication.service;
 
+import com.example.postalitemsapplication.exception.NotFoundException;
 import com.example.postalitemsapplication.model.Item;
 import com.example.postalitemsapplication.repository.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,8 @@ public class ItemService implements CommonServiceMethods<Item> {
 
     @Override
     public Item getByID(Integer id) {
-        return itemRepository.findById(id).orElse(null);
+        return itemRepository.findById(id)
+                .orElseThrow(()->new NotFoundException("Не удалось найти почтовое отправление с id " + id));
     }
 
 
